@@ -1,0 +1,145 @@
+class Event:
+
+    def __init__(self, start_hr, start_min, finish_hr, finish_min, description, location):
+        self.start_hr = start_hr
+        self.start_min = start_min
+        self.finish_hr = finish_hr
+        self.finish_min = finish_min
+        self.description = description
+        self.location = location
+
+    def displayEvent(self):
+        result = "From " + str(self.start_hr) + ":" + str(self.start_min)
+        result += " To " + str(self.finish_hr) + ":" + str(self.finish_min) + "\n"
+        result += "Description: " + str(self.description) + "\n"
+        result += "Location: " + str(self.location) + "\n"
+        result += "------------------------------------------------------------"
+        return result
+
+
+class Day:
+
+    def __init__(self, name, day_of_month, month_belong_to):
+        self.name = name
+        self.day_of_month = day_of_month
+        self.month_belong_to = month_belong_to
+        self.events = []
+
+    def addEvent(self, event):
+        self.events.append(event)
+
+    def displayAllEvents(self):
+        print("All events scheduled for " + self.name + ", " + str(self.day_of_month) + " " + self.month_belong_to)
+        for i in self.events:
+            print(i.displayEvent())
+
+
+class Month:
+    def __init__(self, name, month_of_year):
+        self.name = name
+        self.month_of_year = month_of_year
+
+        if month_of_year == 2:
+            self.number_of_days = 28
+        elif month_of_year == 1 or month_of_year == 3 or month_of_year == 5 or month_of_year == 7 or month_of_year == 8 or month_of_year == 10 or month_of_year == 12:
+            self.number_of_days = 31
+        else:
+            self.number_of_days = 30
+
+        self.days = [] * self.number_of_days
+
+    def addDay(self, day):
+        self.days.insert(day.day_of_month-1, day)
+
+    def displayEvents(self):
+        for i in self.days:
+            i.displayAllEvents()
+
+class Year:
+
+    def __init__(self, year_number):
+        self.year_number = year_number
+        self.months = [] * 12
+
+    def addMonth(self, month):
+        self.months.insert(month, month.month_of_year-1)
+
+
+class Calendar:
+
+    def __init__(self):
+        self.years = []
+
+    def addYear(self, year):
+        self.years.add(year)
+
+    def initializeCalendar(self):
+        #Creating years
+        for i in range(2000, 2025):
+            y = Year(i)
+            self.years.append(y)
+
+        my_months =["","january", "february", "March","April", "May", "June","july","August","September","October","November","December"]
+        for y in range(0, 25):
+            for m in range(1,12):
+                tmp_month=Month(my_months[m],m)
+                self.years[y].month[m-1] = tmp_month
+                #creating days and appending them to months _
+
+    def addEvent(self):
+        pass
+
+    def DisplayAllEventsInMonth(self):
+        pass
+
+    def displayOverlappingEvents(self):
+        pass
+
+    def removeEvent(self):
+        pass
+
+    def editEvent(self):
+        pass
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        test case
+        from calendarclasses import *
+
+e1 = Event(12, 10, 14, 10, 'Meegin with Co-op advisor', 'Cestar College')
+e2 = Event(10, 4, 16,  10, 'Graduation', 'Lambton College')
+e3 = Event(20, 00, 22, 00, 'Watching Movie', 'Fairview Mall')
+e4 = Event(7, 0, 8, 00, 'Meeting for breakfast', 'Restaurant')
+
+d = Day('Monday', 12, 'October')
+d.addEvent(e1)
+d.addEvent(e2)
+d.displayAllEvents()
+
+d2 = Day('Wednesday', 14, 'October')
+d2.addEvent(e3)
+d2.addEvent(e4)
+
+m = Month('October', 10)
+m.addDay(d)
+m.addDay(d2)
+m.displayEvents()
